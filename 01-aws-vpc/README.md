@@ -32,7 +32,7 @@ This operation should be fairly quick since we are only creating a few
 resources.
 
 If you open the Amazon console and look under EC2 -> Key Pairs, you will see
-a new keypair has been created named "hashicorp-training". We will use this
+a new keypair has been created named "environment_name". We will use this
 keypair to connect to new EC2 instances created on Amazon in the next parts
 of this tutorial.
 

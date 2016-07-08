@@ -7,10 +7,10 @@ resource "aws_instance" "web" {
   ami   = "${lookup(var.aws_amis, var.aws_region)}"
 
   instance_type = "t2.micro"
-  key_name      = "${aws_key_pair.hashicorp-training.key_name}"
-  subnet_id     = "${aws_subnet.hashicorp-training.id}"
+  key_name      = "${aws_key_pair.environment_name.key_name}"
+  subnet_id     = "${aws_subnet.environment_name.id}"
 
-  vpc_security_group_ids = ["${aws_security_group.hashicorp-training.id}"]
+  vpc_security_group_ids = ["${aws_security_group.environment_name.id}"]
 
   tags {
     Name = "web-${count.index}"
@@ -49,10 +49,10 @@ resource "aws_instance" "haproxy" {
   ami = "${lookup(var.aws_amis, var.aws_region)}"
 
   instance_type = "t2.micro"
-  key_name      = "${aws_key_pair.hashicorp-training.key_name}"
-  subnet_id     = "${aws_subnet.hashicorp-training.id}"
+  key_name      = "${aws_key_pair.environment_name.key_name}"
+  subnet_id     = "${aws_subnet.environment_name.id}"
 
-  vpc_security_group_ids = ["${aws_security_group.hashicorp-training.id}"]
+  vpc_security_group_ids = ["${aws_security_group.environment_name.id}"]
 
   tags {
     Name = "haproxy"

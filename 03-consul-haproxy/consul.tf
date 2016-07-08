@@ -12,13 +12,13 @@ module "consul" {
   servers = 3
 
   # This tells the Consul module to launch inside our VPC.
-  subnet_id      = "${aws_subnet.hashicorp-training.id}"
-  security_group = "${aws_security_group.hashicorp-training.id}"
+  subnet_id      = "${aws_subnet.environment_name.id}"
+  security_group = "${aws_security_group.environment_name.id}"
 
   # These two arguments use outputs from another module. The ssh_keys module
   # we have been using outputs the key name and key path. The Consul module
   # takes those values as arguments.
-  key_name         = "${aws_key_pair.hashicorp-training.key_name}"
+  key_name         = "${aws_key_pair.environment_name.key_name}"
   private_key_path = "${path.module}/${var.private_key_path}"
 
   # These variables are provided via our top-level module so that the Consul

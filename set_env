@@ -1,0 +1,7 @@
+mkdir ../tmp
+mv -f .git ../tmp/.git
+mv -f .gitignore ../tmp/.gitignore
+sed -i '' -e 's/environment_name/environment_name/g' $(find . -type f)
+mv -f ../tmp/.git .git
+mv -f ../tmp/.gitignore .gitignore
+rm -fr ../tmp

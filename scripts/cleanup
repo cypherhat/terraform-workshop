@@ -8,4 +8,4 @@ DIR="$( cd -P "$( dirname "$SOURCE" )/.." && pwd )"
 cd $DIR
 
 find . -name '*.DS_Store' -type f -delete
-find . -name 'hashicorp-training*' -type f -delete
+find . -name 'environment_name*' -type f -delete

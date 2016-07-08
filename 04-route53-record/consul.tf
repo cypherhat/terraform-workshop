@@ -6,10 +6,10 @@ module "consul" {
 
   datacenter = "dc1"
 
-  subnet_id      = "${aws_subnet.hashicorp-training.id}"
-  security_group = "${aws_security_group.hashicorp-training.id}"
+  subnet_id      = "${aws_subnet.environment_name.id}"
+  security_group = "${aws_security_group.environment_name.id}"
 
-  key_name         = "${aws_key_pair.hashicorp-training.key_name}"
+  key_name         = "${aws_key_pair.environment_name.key_name}"
   private_key_path = "${path.module}/${var.private_key_path}"
 
   atlas_environment = "${var.atlas_environment}"
