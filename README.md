@@ -1,3 +1,5 @@
+Note: This project was initially forked from https://github.com/sethvargo/terraform-workshop-atlas.git. 
+
 Initial Infrastructure
 ======================
 This training runs in a virtual machine driven by Vagrant. Start the VM by
