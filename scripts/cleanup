@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -e
+
+# Go to the parent directory of where this script is
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ] ; do SOURCE="$(readlink "$SOURCE")"; done
+DIR="$( cd -P "$( dirname "$SOURCE" )/.." && pwd )"
+cd $DIR
+
+find . -name '*.DS_Store' -type f -delete
+find . -name 'hashicorp-training*' -type f -delete
