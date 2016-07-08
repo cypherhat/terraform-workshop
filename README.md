@@ -1,4 +1,4 @@
-Note: This project was initially forked from https://github.com/sethvargo/terraform-workshop-atlas.git. 
+Note: This project was initially forked from https://github.com/sethvargo/terraform-workshop-atlas.git.
 
 Initial Infrastructure
 ======================
@@ -41,6 +41,10 @@ complete all fields.  The resulting file should look something like this:
 aws_route53_zone_id = "REPLACE WITH YOUR AWS ROUTE53 ZONE"
 domain_name         = "REPLACE WITH YOUR DOMAIN NAME"
 ```
+
+Environment Name
+----------------
+Since you might be sharing an AWS account, the best practice is to distinguish the resources you are creating from those created by others. We do this with an `environment_name`. Open the script named `setup_env`. Change  `my_name` to something unique for the AWS account you are working in (e.g., bob-training.) Now, run the script `setup_env`. This will change the environment name from `environment_name` to your own.
 
 SSH keys
 --------
