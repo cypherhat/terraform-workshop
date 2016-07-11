@@ -8,6 +8,7 @@ variable "aws_region" {
 # These values come from your AWS credentials.
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
+variable "ssh_allowed_ip" {}
 
 # This stanza declares the default region for our provider. The other
 # attributes such as access_key and secret_key will be read from the
@@ -127,21 +128,41 @@ resource "aws_route_table_association" "environment_name" {
 # (ingress) and outbound (egress) networking rules. This particular security
 # group is intentionally insecure for the purposes of this tutorial. You should
 # only open required ports in a production environment.
-resource "aws_security_group" "environment_name" {
-  name   = "environment_name-web"
-  vpc_id = "${aws_vpc.environment_name.id}"
-
+resource "aws_security_group" "cypherhat_env" {
+  name   = "cypherhat_env-web"
+  vpc_id = "${aws_vpc.cypherhat_env.id}"
+  // These are for internal traffic
   ingress {
-    protocol    = -1
-    from_port   = 0
-    to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port = 0
+    to_port = 65535
+    protocol = "tcp"
+    self = true
+  }
+  ingress {
+    from_port = 0
+    to_port = 65535
+    protocol = "udp"
+    self = true
   }
 
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["${var.ssh_allowed_ip}"]
+  }
+
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     protocol    = -1
     from_port   = 0
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
+
 }
