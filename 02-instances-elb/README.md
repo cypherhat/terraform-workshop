@@ -20,13 +20,15 @@ more examples.
 Instance Creation
 -----------------
 Let's run the Terraform plan to see the proposed output:
-
+```
     $ terraform plan 02-instances-elb
+```
 
 Notice that Terraform plans to create four (4) new resources. Assuming
 everything looks okay, let's apply this plan:
-
+```
     $ terraform apply 02-instances-elb
+```
 
 This can take a few minutes, but watching the output can be exciting. If you
 get an error, please ask the instructor for help. At the end of the Terraform
@@ -40,12 +42,14 @@ pull specific pieces out for processing. In addition to being displayed at the
 end of a successful Terraform apply, output variables can be accessed via the
 command line using the `terraform output` command. For example, the following
 command could be used to get the address of the Consul UI:
-
+```
     $ terraform output instance-ips
+```
 
 Or you could list all outputs:
-
+```
     $ terraform output
+```
 
 Try to get the output for the `lb-address` on your own.
 

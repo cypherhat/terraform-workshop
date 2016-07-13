@@ -35,24 +35,28 @@ configuration.
 Instance Creation
 -----------------
 Let's run the Terraform plan to see the proposed output:
-
+```
     $ terraform plan 03-consul-haproxy
+```
 
 Notice that Terraform immediately errors about a missing module. This is because
 modules are versioned and vendored locally in a `.terraform` directory. We can
 fetch the module by running:
-
+```
     $ terraform get 03-consul-haproxy
+```
 
-Now the module is vendored. Even if the upstream module changes, Terraform will
+Now the module is versioned. Even if the upstream module changes, Terraform will
 continue to use our locally cached copy unless we force an update. Now re-run
 the plan:
-
+```
     $ terraform plan 03-consul-haproxy
+```
 
 Assuming everything looks okay, let's apply this plan:
-
+```
     $ terraform apply 03-consul-haproxy
+```
 
 This can take a few minutes, but watching the output can be exciting. If you
 get an error, please ask the instructor for help. At the end of the Terraform

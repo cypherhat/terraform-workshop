@@ -24,7 +24,10 @@ to manage a Hosted Zone in Route53, you declare the zone with the `aws_route53_z
 resource "aws_route53_zone" "primary" {
   name = "yourdomain.tld"
 }
+```
 
+Then, to add a subdomain to your Terraform-managed Zone, you do the following:
+```
 resource "aws_route53_record" "web" {
    zone_id = "${aws_route53_zone.primary.zone_id}"
    name = "web.yourdomain.tld"
@@ -43,11 +46,12 @@ Otherwise, if you just want to *immediately* add an A record, you just declare t
 
 ```
 resource "aws_route53_record" "web" {
-   zone_id = "ZZZZZZZZZZZZZZ"
-   name = "web.yourdomain.tld"
+   zone_id = "${var.aws_route53_zone_id}"
+   name = "web.${var.domain_name}"
    type = "A"
    ttl = "30"
    records = ["${aws_instance.haproxy.public_ip}"]
 }
-
 ```
+
+The variable `domain_name` is specified in your `terraform.tfvars` file.

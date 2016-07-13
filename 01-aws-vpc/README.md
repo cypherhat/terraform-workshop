@@ -20,13 +20,24 @@ You will notice Terraform uses the "+" to denote a new resource being added.
 Terraform will similarly use a "-" to denote a resource that will be removed,
 and a "~" to indicate a resource that will have changed attributes in place.
 
+After the plan runs successfully, you might like to visualize the infrastructure
+that you are building. We can use the `terraform graph` command to do that. Graphing
+makes use of the `graphviz` package. This has been installed for you during Vagrant
+provisioning.
+```
+   $ terraform graph 01-aws-vpc | dot -Tpng > graph.png
+```
+
+Open the `graph.png` file to see the dependency graph.
+
 Applying
 --------
 As mentioned before, a Terraform plan is a no-op and never changes live
 infrastructure. The Terraform apply is the process by which infrastructure is
 changed and managed. Let's run the apply now:
-
+```
     $ terraform apply 01-aws-vpc
+```
 
 This operation should be fairly quick since we are only creating a few
 resources.
@@ -37,8 +48,9 @@ keypair to connect to new EC2 instances created on Amazon in the next parts
 of this tutorial.
 
 Let's see what happens if we run the plan again:
-
+```
     $ terraform plan 01-aws-vpc
+```
 
 You will notice that the output indicates no resources are to change. To further
 illustrate the power of Terraform, run `terraform apply 01-aws-vpc` again.
