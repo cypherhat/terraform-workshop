@@ -2,8 +2,9 @@
 # Consul at https:#github.com/hashicorp/consul in the Terraform folder.
 module "consul" {
   # This is the source of the Consul module.
-  source = "github.com/sethvargo/tf-consul-atlas-join"
+  source = "../consul"
 
+  name = "${var.environment_name}"
   # This is the specific AMI id to use for the Consul servers.
   ami = "${lookup(var.aws_amis, var.aws_region)}"
 
@@ -21,10 +22,4 @@ module "consul" {
   key_name         = "${aws_key_pair.my_environment.key_name}"
   private_key_path = "${path.module}/${var.private_key_path}"
 
-  # These variables are provided via our top-level module so that the Consul
-  # cluster can join using Atlas. This removes the need to use a "well-known"
-  # IP address to join the initial cluster, and it gives us the web interface
-  # in Atlas.
-  atlas_environment = ""
-  atlas_token       = ""
 }
