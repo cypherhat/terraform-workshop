@@ -48,7 +48,13 @@ Replace the above variables.
 
 Environment Name
 ----------------
-Since you might be sharing an AWS account, the best practice is to distinguish the resources you are creating from those created by others. We do this with an `environment_name`. Open the script named `setup_env`. Change  `my_name` to something unique for the AWS account you are working in (e.g., bob-training.) Now, run the script `setup_env`. This will change the environment name from `environment_name` to your own.
+Since you might be sharing an AWS account, the best practice is to distinguish the resources you are creating from those created by others. I haven't figured out a way to do this with Terraform templates or variables yet, so, I do this with a script: `set_env`. To change your environment from `environment_name` to a name of your choosing, execute the `set_env` script:
+
+```
+./set_env cypherhat_env
+```
+
+This will change the environment name from `environment_name` to your `cypherhat_env`.
 
 SSH keys
 --------
