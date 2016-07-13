@@ -12,19 +12,19 @@ module "consul" {
   servers = 3
 
   # This tells the Consul module to launch inside our VPC.
-  subnet_id      = "${aws_subnet.environment_name.id}"
-  security_group = "${aws_security_group.environment_name.id}"
+  subnet_id      = "${aws_subnet.my_environment.id}"
+  security_group = "${aws_security_group.my_environment.id}"
 
   # These two arguments use outputs from another module. The ssh_keys module
   # we have been using outputs the key name and key path. The Consul module
   # takes those values as arguments.
-  key_name         = "${aws_key_pair.environment_name.key_name}"
+  key_name         = "${aws_key_pair.my_environment.key_name}"
   private_key_path = "${path.module}/${var.private_key_path}"
 
   # These variables are provided via our top-level module so that the Consul
   # cluster can join using Atlas. This removes the need to use a "well-known"
   # IP address to join the initial cluster, and it gives us the web interface
   # in Atlas.
-  atlas_environment = "${var.atlas_environment}"
-  atlas_token       = "${var.atlas_token}"
+  atlas_environment = ""
+  atlas_token       = ""
 }

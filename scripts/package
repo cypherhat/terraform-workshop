@@ -22,11 +22,10 @@ cp -r "${DIR}" "${DIR}-package"
 pushd "${DIR}-package"
 rm -rf .terraform
 cat > terraform.tfvars <<EOH
-aws_access_key     = ""
-aws_secret_key     = ""
-atlas_token        = ""
-atlas_username     = ""
-atlas_environment  = ""
+aws_route53_zone_id = ""
+domain_name         = ""
+ssh_allowed_ip      = ""
+environment_name    = ""
 EOH
 rm -rf .docker
 rm -rf .git

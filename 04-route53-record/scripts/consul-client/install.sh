@@ -48,9 +48,6 @@ script
     -advertise="${LOCAL_IP}" \
     -bind="0.0.0.0" \
     -client="0.0.0.0" \
-    -atlas-join \
-    -atlas-token="${ATLAS_TOKEN}" \
-    -atlas="${ATLAS_ENVIRONMENT}" \
     ${CONSUL_FLAGS} \
     >>/var/log/consul.log 2>&1
 end script

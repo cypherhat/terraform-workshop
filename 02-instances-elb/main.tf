@@ -27,17 +27,17 @@ resource "aws_instance" "web" {
   # parallel where possible. If we just hard-coded the name, it is possible
   # Terraform would create the instance first, then create the key, which
   # would raise an error.
-  key_name = "${aws_key_pair.environment_name.key_name}"
+  key_name = "${aws_key_pair.my_environment.key_name}"
 
   # The subnet_id is the subnet this instance should run in. We can just
   # reference the subnet created by our aws.tf file.
-  subnet_id = "${aws_subnet.environment_name.id}"
+  subnet_id = "${aws_subnet.my_environment.id}"
 
   # The vpc_security_group_ids specifies the security group(s) this instance
   # belongs to. We can reference the security group created in the aws.tf file.
   # This security group is "wide open" and allows all ingress and egress
   # traffic through.
-  vpc_security_group_ids = ["${aws_security_group.environment_name.id}"]
+  vpc_security_group_ids = ["${aws_security_group.my_environment.id}"]
 
   # Tags are arbitrary key-value pairs that will be displayed with the instance
   # in the EC2 console. "Name" is important since that is what will be
@@ -84,10 +84,10 @@ resource "aws_elb" "web" {
 
   # This puts the ELB in the same subnet (and thus VPC) as the instances. This
   # is required so the ELB can forward traffic to the instances.
-  subnets = ["${aws_subnet.environment_name.id}"]
+  subnets = ["${aws_subnet.my_environment.id}"]
 
   # This specifies the security groups the ELB is a part of.
-  security_groups = ["${aws_security_group.environment_name.id}"]
+  security_groups = ["${aws_security_group.my_environment.id}"]
 
   # This tells the ELB which port(s) to listen on. This block can be specified
   # multiple times to specify multiple ports. We are just using a simple web
@@ -117,7 +117,7 @@ resource "aws_elb" "web" {
 
   # This names the ELB.
   tags {
-    Name = "environment_name"
+    Name = "${var.environment_name}"
   }
 }
 

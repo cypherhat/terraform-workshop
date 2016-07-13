@@ -1,18 +1,15 @@
 # Here we are defining some new variables. These variables' values come from
 # the terraform.tfvars value we filled out at the start of training.
-variable "atlas_username" {}
-variable "atlas_token" {}
-variable "atlas_environment" {}
 
 resource "aws_instance" "web" {
   count = 3
   ami   = "${lookup(var.aws_amis, var.aws_region)}"
 
   instance_type = "t2.micro"
-  key_name      = "${aws_key_pair.environment_name.key_name}"
-  subnet_id     = "${aws_subnet.environment_name.id}"
+  key_name      = "${aws_key_pair.my_environment.key_name}"
+  subnet_id     = "${aws_subnet.my_environment.id}"
 
-  vpc_security_group_ids = ["${aws_security_group.environment_name.id}"]
+  vpc_security_group_ids = ["${aws_security_group.my_environment.id}"]
 
   tags {
     Name = "web-${count.index}"
@@ -55,8 +52,6 @@ resource "aws_instance" "web" {
   # configuration piece.
   provisioner "remote-exec" {
     inline = [
-      "echo 'ATLAS_ENVIRONMENT=${var.atlas_environment}' | sudo tee -a /etc/service/consul &>/dev/null",
-      "echo 'ATLAS_TOKEN=${var.atlas_token}' | sudo tee -a /etc/service/consul &>/dev/null",
       "echo 'NODE_NAME=web-${count.index}' | sudo tee -a /etc/service/consul &>/dev/null",
       "sudo service consul restart",
     ]
@@ -70,10 +65,10 @@ resource "aws_instance" "haproxy" {
   ami = "${lookup(var.aws_amis, var.aws_region)}"
 
   instance_type = "t2.micro"
-  key_name      = "${aws_key_pair.environment_name.key_name}"
-  subnet_id     = "${aws_subnet.environment_name.id}"
+  key_name      = "${aws_key_pair.my_environment.key_name}"
+  subnet_id     = "${aws_subnet.my_environment.id}"
 
-  vpc_security_group_ids = ["${aws_security_group.environment_name.id}"]
+  vpc_security_group_ids = ["${aws_security_group.my_environment.id}"]
 
   tags {
     Name = "haproxy"
@@ -111,8 +106,6 @@ resource "aws_instance" "haproxy" {
   # This is the same runtime configuration as above.
   provisioner "remote-exec" {
     inline = [
-      "echo 'ATLAS_ENVIRONMENT=${var.atlas_environment}' | sudo tee -a /etc/service/consul &>/dev/null",
-      "echo 'ATLAS_TOKEN=${var.atlas_token}' | sudo tee -a /etc/service/consul &>/dev/null",
       "echo 'NODE_NAME=haproxy' | sudo tee -a /etc/service/consul &>/dev/null",
       "sudo service consul restart",
     ]

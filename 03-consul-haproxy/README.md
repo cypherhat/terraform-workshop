@@ -15,8 +15,6 @@ that we need to provide very little information to the module in order to gain
 its benefits. Next, let's take a look at the actual module on GitHub (note: the
 instructor will walk you through the module).
 
-https://github.com/sethvargo/tf-consul-atlas-join
-
 Instance Resources
 ------------------
 If we examine the `main.tf` file, you will notice a series of resources and
