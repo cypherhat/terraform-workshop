@@ -3,7 +3,7 @@ Vagrant.configure(2) do |config|
 
   # Disable checking for updates to save bandwidth.
   config.vm.box_check_update = false
-
+  config.vm.provision :shell, path: "bootstrap.sh"
   # Give the VM more memory, CPU, and a better NIC.
   config.vm.provider "virtualbox" do |v|
     v.customize ["modifyvm", :id, "--cpus", "2"]
