@@ -134,6 +134,10 @@ resource "aws_security_group" "my_environment" {
   name   = "${var.environment_name}-web"
   vpc_id = "${aws_vpc.my_environment.id}"
   // These are for internal traffic
+
+  tags {
+    Name = "${var.environment_name}"
+  }
   ingress {
     from_port = 0
     to_port = 65535

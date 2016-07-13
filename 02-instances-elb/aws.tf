@@ -134,6 +134,10 @@ resource "aws_route_table_association" "my_environment" {
 resource "aws_security_group" "my_environment" {
   name   = "${var.environment_name}-web"
   vpc_id = "${aws_vpc.my_environment.id}"
+
+    tags {
+      Name = "${var.environment_name}"
+    }
   // These are for internal traffic
   ingress {
     from_port = 0

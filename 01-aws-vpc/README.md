@@ -25,10 +25,10 @@ that you are building. We can use the `terraform graph` command to do that. Grap
 makes use of the `graphviz` package. This has been installed for you during Vagrant
 provisioning.
 ```
-   $ terraform graph 01-aws-vpc | dot -Tpng > graph.png
+   $ terraform graph 01-aws-vpc | dot -Tpng > 01-aws-vpc.png
 ```
 
-Open the `graph.png` file to see the dependency graph.
+Open the `01-aws-vpc.png` file to see the dependency graph.
 
 Applying
 --------

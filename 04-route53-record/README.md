@@ -10,6 +10,15 @@ Now you can run `terraform plan 04-route53-record`. If Terraform prompts
 for input, make sure you entered a default on line 6 for the subdomain. This
 value must be unique to this training.
 
+If you want to visualize the infrastructure that you are building we can use the
+`terraform graph` command again:
+```
+  $ terraform graph 04-route53-record | dot -Tpng > 04-route53-record.png
+```
+
+Open the `04-route53-record.png` file to see the dependency graph.
+
+
 Assuming everything looks correct, you can run the apply by running
 `terraform apply 04-route53-record`. This will create the subdomain and
 point it at the IP of your load balancer on EC2. You will see this as an

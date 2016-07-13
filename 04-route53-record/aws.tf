@@ -93,11 +93,11 @@ resource "aws_internet_gateway" "my_environment" {
 }
 
 resource "aws_route53_record" "web" {
-   zone_id = "${var.aws_route53_zone_id}"
-   name = "web.${var.domain_name}"
-   type = "A"
-   ttl = "30"
-   records = ["${aws_instance.haproxy.public_ip}"]
+  zone_id = "${var.aws_route53_zone_id}"
+  name = "web.${var.domain_name}"
+  type = "A"
+  ttl = "30"
+  records = ["${aws_instance.haproxy.public_ip}"]
 }
 
 # The subnet is the IP address range resources will occupy inside the VPC. Here
@@ -144,6 +144,10 @@ resource "aws_security_group" "my_environment" {
   name   = "${var.environment_name}-web"
   vpc_id = "${aws_vpc.my_environment.id}"
   // These are for internal traffic
+
+  tags {
+    Name = "${var.environment_name}"
+  }
   ingress {
     from_port = 0
     to_port = 65535

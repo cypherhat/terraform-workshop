@@ -53,6 +53,14 @@ the plan:
     $ terraform plan 03-consul-haproxy
 ```
 
+If you want to visualize the infrastructure that you are building we can use the
+`terraform graph` command again:
+```
+  $ terraform graph 03-consul-haproxy | dot -Tpng > 03-consul-haproxy.png
+```
+
+Open the `03-consul-haproxy.png` file to see the dependency graph.
+
 Assuming everything looks okay, let's apply this plan:
 ```
     $ terraform apply 03-consul-haproxy

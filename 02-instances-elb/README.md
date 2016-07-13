@@ -24,8 +24,16 @@ Let's run the Terraform plan to see the proposed output:
     $ terraform plan 02-instances-elb
 ```
 
-Notice that Terraform plans to create four (4) new resources. Assuming
-everything looks okay, let's apply this plan:
+Notice that Terraform plans to create four (4) new resources. If you want
+to visualize the infrastructure that you are building we can use the
+`terraform graph` command again:
+```
+   $ terraform graph 02-instances-elb | dot -Tpng > 02-instances-elb.png
+```
+
+Open the `02-instances-elb.png` file to see the dependency graph.
+
+Assuming everything looks okay, let's apply this plan:
 ```
     $ terraform apply 02-instances-elb
 ```

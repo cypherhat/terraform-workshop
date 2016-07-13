@@ -43,7 +43,7 @@ resource "aws_instance" "web" {
   # in the EC2 console. "Name" is important since that is what will be
   # displayed in the console.
   tags {
-    Name = "web-${count.index}"
+    Name = "${var.environment_name}-web-${count.index}"
   }
 
   # This tells Terraform how to connect to the instance to provision. Terraform
