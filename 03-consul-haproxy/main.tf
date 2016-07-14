@@ -13,7 +13,7 @@ resource "aws_instance" "web" {
 
 
   tags {
-    Name = "${var.environment_name}-web"
+    Name = "${var.environment_name}-web-${count.index}"
   }
 
   connection {

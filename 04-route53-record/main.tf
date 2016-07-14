@@ -9,9 +9,10 @@ resource "aws_instance" "web" {
 
   vpc_security_group_ids = ["${aws_security_group.my_environment.id}"]
 
+  
 
   tags {
-    Name = "${var.environment_name}-haproxy"
+    Name = "${var.environment_name}-web-${count.index}"
   }
 
   connection {
@@ -53,7 +54,7 @@ resource "aws_instance" "haproxy" {
   tags {
     Name = "${var.environment_name}-haproxy"
   }
-  
+
   connection {
     user     = "ubuntu"
     key_file = "${path.module}/${var.private_key_path}"
