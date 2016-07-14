@@ -8,12 +8,12 @@ resource "aws_instance" "web" {
   instance_type = "t2.micro"
   key_name      = "${aws_key_pair.my_environment.key_name}"
   subnet_id     = "${aws_subnet.my_environment.id}"
-  
+
   vpc_security_group_ids = ["${aws_security_group.my_environment.id}"]
 
 
   tags {
-    Name = "${var.environment_name}-haproxy"
+    Name = "${var.environment_name}-web"
   }
 
   connection {
