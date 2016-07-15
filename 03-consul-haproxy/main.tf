@@ -1,5 +1,8 @@
 # Here we are defining some new variables. These variables' values come from
 # the terraform.tfvars value we filled out at the start of training.
+variable "atlas_username" {}
+variable "atlas_token" {}
+variable "atlas_environment" {}
 
 resource "aws_instance" "web" {
   count = 3
@@ -53,6 +56,8 @@ resource "aws_instance" "web" {
   # configuration piece.
   provisioner "remote-exec" {
     inline = [
+      "echo 'ATLAS_ENVIRONMENT=${var.atlas_environment}' | sudo tee -a /etc/service/consul &>/dev/null",
+      "echo 'ATLAS_TOKEN=${var.atlas_token}' | sudo tee -a /etc/service/consul &>/dev/null",
       "echo 'NODE_NAME=web-${count.index}' | sudo tee -a /etc/service/consul &>/dev/null",
       "sudo service consul restart",
     ]
@@ -107,6 +112,8 @@ resource "aws_instance" "haproxy" {
   # This is the same runtime configuration as above.
   provisioner "remote-exec" {
     inline = [
+      "echo 'ATLAS_ENVIRONMENT=${var.atlas_environment}' | sudo tee -a /etc/service/consul &>/dev/null",
+      "echo 'ATLAS_TOKEN=${var.atlas_token}' | sudo tee -a /etc/service/consul &>/dev/null",
       "echo 'NODE_NAME=haproxy' | sudo tee -a /etc/service/consul &>/dev/null",
       "sudo service consul restart",
     ]

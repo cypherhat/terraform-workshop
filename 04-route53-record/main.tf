@@ -1,3 +1,6 @@
+variable "atlas_username" {}
+variable "atlas_token" {}
+variable "atlas_environment" {}
 
 resource "aws_instance" "web" {
   count = 3
@@ -9,7 +12,7 @@ resource "aws_instance" "web" {
 
   vpc_security_group_ids = ["${aws_security_group.my_environment.id}"]
 
-  
+
 
   tags {
     Name = "${var.environment_name}-web-${count.index}"
@@ -36,6 +39,8 @@ resource "aws_instance" "web" {
 
   provisioner "remote-exec" {
     inline = [
+      "echo 'ATLAS_ENVIRONMENT=${var.atlas_environment}' | sudo tee -a /etc/service/consul &>/dev/null",
+      "echo 'ATLAS_TOKEN=${var.atlas_token}' | sudo tee -a /etc/service/consul &>/dev/null",
       "echo 'NODE_NAME=web-${count.index}' | sudo tee -a /etc/service/consul &>/dev/null",
       "sudo service consul restart",
     ]
@@ -76,6 +81,8 @@ resource "aws_instance" "haproxy" {
 
   provisioner "remote-exec" {
     inline = [
+      "echo 'ATLAS_ENVIRONMENT=${var.atlas_environment}' | sudo tee -a /etc/service/consul &>/dev/null",
+      "echo 'ATLAS_TOKEN=${var.atlas_token}' | sudo tee -a /etc/service/consul &>/dev/null",
       "echo 'NODE_NAME=haproxy' | sudo tee -a /etc/service/consul &>/dev/null",
       "sudo service consul restart",
     ]

@@ -139,31 +139,12 @@ resource "aws_security_group" "my_environment" {
     Name = "${var.environment_name}"
   }
   ingress {
-    from_port = 0
-    to_port = 65535
-    protocol = "tcp"
-    self = true
-  }
-  ingress {
-    from_port = 0
-    to_port = 65535
-    protocol = "udp"
-    self = true
-  }
-
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["${var.ssh_allowed_ip}"]
-  }
-
-  ingress {
-    from_port = 80
-    to_port = 80
-    protocol = "tcp"
+    protocol    = -1
+    from_port   = 0
+    to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
+
   egress {
     protocol    = -1
     from_port   = 0

@@ -134,37 +134,18 @@ resource "aws_route_table_association" "my_environment" {
 resource "aws_security_group" "my_environment" {
   name   = "${var.environment_name}-web"
   vpc_id = "${aws_vpc.my_environment.id}"
-
-    tags {
-      Name = "${var.environment_name}"
-    }
   // These are for internal traffic
-  ingress {
-    from_port = 0
-    to_port = 65535
-    protocol = "tcp"
-    self = true
-  }
-  ingress {
-    from_port = 0
-    to_port = 65535
-    protocol = "udp"
-    self = true
-  }
 
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["${var.ssh_allowed_ip}"]
+  tags {
+    Name = "${var.environment_name}"
   }
-
   ingress {
-    from_port = 80
-    to_port = 80
-    protocol = "tcp"
+    protocol    = -1
+    from_port   = 0
+    to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
+
   egress {
     protocol    = -1
     from_port   = 0
