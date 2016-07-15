@@ -43,15 +43,8 @@ variable "aws_amis" {
   }
 }
 
-# The private key.
-variable "private_key_path" {
-  default = "keys/my_key"
-}
-
 # The public key.
-variable "public_key_path" {
-  default = "keys/my_key.pub"
-}
+variable "public_key" {}
 
 # This uploads our local keypair to AWS so we can access the instance. This
 # tutorial includes a pre-packaged SSH key, so you do not need to worry about
@@ -66,7 +59,7 @@ resource "aws_key_pair" "my_environment" {
   #
   # Instead we are going to leverage Terraform's ability to read a file from
   # your local machine using the `file` attribute.
-  public_key = "${file("${var.public_key_path}")}"
+  public_key = "${var.public_key}"
 }
 
 # Create a Virtual Private Network (VPC) for our tutorial. Any resources we
