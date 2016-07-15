@@ -45,6 +45,9 @@ variable "aws_amis" {
 
 # The public key.
 variable "public_key" {}
+variable "private_key_path" {
+  default = "keys/my_key"
+}
 
 # This uploads our local keypair to AWS so we can access the instance. This
 # tutorial includes a pre-packaged SSH key, so you do not need to worry about
