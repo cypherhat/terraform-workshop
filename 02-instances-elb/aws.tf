@@ -132,20 +132,22 @@ resource "aws_route_table_association" "my_environment" {
 # group is intentionally insecure for the purposes of this tutorial. You should
 # only open required ports in a production environment.
 resource "aws_security_group" "my_environment" {
-  name   = "${var.environment_name}-web"
+  name   = "${var.environment_name}"
   vpc_id = "${aws_vpc.my_environment.id}"
-  // These are for internal traffic
 
-  tags {
-    Name = "${var.environment_name}"
-  }
   ingress {
-    protocol    = -1
-    from_port   = 0
-    to_port     = 0
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["${var.ssh_allowed_ip}"]
+  }
+
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   egress {
     protocol    = -1
     from_port   = 0
