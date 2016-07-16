@@ -26,10 +26,36 @@ This will configure the remote state. Now we need to push our copy to Atlas:
 ```
 $ terraform remote push
 
-$ terraform push -vcs=false -name="$ATLAS_ENV" ./02-instances-elb
+$ terraform push -vcs=true -name="$ATLAS_ENV" ./02-instances-elb
 ```
 
-Similar to git push, this will send our remote state to Atlas. Atlas is now managing our remote state - this is most ideal for teams or using Atlas to run Terraform for you (which we will do now).
+Similar to git push, this will send our remote state to Atlas. Atlas is now managing our remote state - this is most ideal for teams or using Atlas to run Terraform for you (which we will do now).  The flag `vcs=true` is important to note. If true (default), then Terraform will detect if a VCS is in use, such as Git, and will only upload files that are committed to version control. If no version control system is detected, Terraform will upload all files in path (parameter to the command).
+
+We now go into Atlas, select our environment and update the Integrations with our GitHub details:
+
+GitHub repository: `cypherhat/terraform-workshop`
+GitHub branch: (default branch)
+Terraform directory: `02-instances-elb`
+
+After we click Associate, we see that a Terraform plan is running.
+
+The plan fails:
+
+```
+There are warnings and/or errors related to your configuration. Please
+fix these before continuing.
+
+Errors:
+
+  * file: open keys/my_key.pub: no such file or directory in:
+
+${file("${var.public_key_path}")}
+
+Setup failed: failed refreshing state (exit 1)
+
+```
+
+We never added the public and private keys to VCS (for good reason, of course.) But our Terraform plan needs them. For the purposes of this exercise, we will add these keys to our repository to show Atlas/GitHub integration.
 
 CI/CD
 -----
@@ -37,13 +63,36 @@ CI/CD
 Create a new branch for the changes to the infrastructure.
 
 ```
-$ git checkout master && git pull && git checkout -b atlas-branch
+$ git checkout -b very-insecure-branch
 ```
 
-Edit the `aws.tf` file to add a new ingress rule for the security group.
+Remove the `**/keys` setting from the `.gitignore` file.
 
 ```
-$ git add 02-instances-elb/awf.tf
-$ git commit -m "New security rule"
-$ git push origin -u atlas-branch
+$ git status
 ```
+
+We should see, among other things, the keys directories:
+
+```
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	.vagrant/
+	01-aws-vpc/keys/
+	02-instances-elb/keys/
+	03-consul-haproxy/keys/
+	04-route53-record/keys/
+	keys/
+```
+
+Add the keys for `02-instances-elb`:
+```
+$ git add 02-instances-elb/keys
+$ git commit -m "Add keys to repo - this is bad"
+$ git push origin -u very-insecure-branch
+```
+
+Go to GitHub and create a new pull request for this branch. You will see Atlas run the plan for this ne pull request. Since the plan succeeds we feel confident that the pull request can be merged, so we do.We go into Atlas and apply the plan.
+
+Fin
