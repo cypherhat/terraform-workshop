@@ -26,7 +26,7 @@ This will configure the remote state. Now we need to push our copy to Atlas:
 ```
 $ terraform remote push
 
-$ terraform push -vcs=false -name="$ATLAS_ENV" ./05-atlas
+$ terraform push -vcs=false -name="$ATLAS_ENV" ./02-instances-elb
 ```
 
 Similar to git push, this will send our remote state to Atlas. Atlas is now managing our remote state - this is most ideal for teams or using Atlas to run Terraform for you (which we will do now).
@@ -43,7 +43,7 @@ $ git checkout master && git pull && git checkout -b atlas-branch
 Edit the `aws.tf` file to add a new ingress rule for the security group.
 
 ```
-$ git add 05-atlas/awf.tf
+$ git add 02-instances-elb/awf.tf
 $ git commit -m "New security rule"
 $ git push origin -u atlas-branch
 ```
