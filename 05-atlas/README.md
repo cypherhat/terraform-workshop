@@ -26,7 +26,7 @@ This will configure the remote state. Now we need to push our copy to Atlas:
 ```
 $ terraform remote push
 
-$ terraform push -vcs=true -name="$ATLAS_ENV" ./05-atlas
+$ terraform push -vcs=false -name="$ATLAS_ENV" ./05-atlas
 ```
 
 Similar to git push, this will send our remote state to Atlas. Atlas is now managing our remote state - this is most ideal for teams or using Atlas to run Terraform for you (which we will do now).
