@@ -1,6 +1,8 @@
 # Next we are going to create a compute resource ("server") in EC2. There are
 # a number of fields that Terraform accepts, but we are only going to use the
 # required ones for now.
+
+variable "elb_name" {}
 resource "aws_instance" "web" {
   # This tells Terraform to create 3 of the same instance. Instead of copying
   # and pasting this resource block multiple times, we can easily scale forward
@@ -80,7 +82,7 @@ resource "aws_instance" "web" {
 # Create a new load balancer
 resource "aws_elb" "web" {
   # This is the name of the ELB.
-  name = "web"
+  name = "${var.elb_name}"
 
   # This puts the ELB in the same subnet (and thus VPC) as the instances. This
   # is required so the ELB can forward traffic to the instances.
@@ -107,7 +109,7 @@ resource "aws_elb" "web" {
     unhealthy_threshold = 2
     timeout             = 3
     target              = "HTTP:80/"
-    interval            = 30
+    interval            = 10
   }
 
   # This sets the list of EC2 instances that will be part of this load
